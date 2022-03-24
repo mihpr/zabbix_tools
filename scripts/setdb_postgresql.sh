@@ -9,19 +9,27 @@ TIMESCALE_ENABLED=false
 PROXY_ENABLED=true
 ################################
 
-DROP_DATABASE_ENABLED=false
+DROP_DATABASE_ENABLED_SERVER=false
+DROP_DATABASE_ENABLED_PROXY=false
 CREATE_USER_ENABLED=false
 
 # Const settings
 DB_USER="zabbix"
-
-if [ "$DROP_DATABASE_ENABLED" = true ]; then
-     echo "DROP DATABASE IF EXISTS $DB_NAME;" | sudo -u postgres psql #zabbix
-fi
+DB_NAME_PROXY=${DB_NAME}_proxy
 
 
+# user
 if [ "$CREATE_USER_ENABLED" = true ]; then
     sudo -u postgres createuser --pwprompt $DB_USER
+fi
+
+# drop database
+if [ "$DROP_DATABASE_ENABLED_SERVER" = true ]; then
+    sudo -u postgres dropdb --if-exists $DB_NAME
+fi
+
+if [ "$DROP_DATABASE_ENABLED_PROXY" = true ]; then
+    sudo -u postgres dropdb --if-exists $DB_NAME_PROXY
 fi
 
 # server
@@ -47,8 +55,6 @@ fi
 
 # proxy
 if [ "$PROXY_ENABLED" = true ]; then
-    DB_NAME_PROXY=${DB_NAME}_proxy
-
     sudo -u postgres createdb -O $DB_USER -E Unicode -T template0 $DB_NAME_PROXY
 
     cd database/postgresql
