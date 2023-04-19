@@ -1,1 +1,0 @@
-@echo Started: %date% %time%

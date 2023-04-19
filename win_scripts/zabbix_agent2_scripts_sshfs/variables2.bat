@@ -1,8 +1,17 @@
-rem set ZABBIX_REPO_ROOT=z:\git\zabbix_agent_win
-set ZABBIX_REPO_ROOT=z:\git\zabbix2
-::set ZABBIX_REPO_ROOT=Y:\home\mikhail\git\zabbix4
+:: Common
+set REPO=zabbix_agent_win
 
-set PCRE_DIR=c:\go-libs\pcre64
-set OPENSSL_DIR=c:\go-libs\openssl64
+:: Win
+set WIN_ZABBIX_REPO_ROOT=z:\git\%COM_REPO%
+set WIN_PCRE_DIR=c:\go-libs\pcre64
+set WIN_OPENSSL_DIR=c:\go-libs\openssl64
+set WIN_ZABBIX_CONF_PATH=c:\zabbix_agent2_scripts_sshfs\conf\zabbix_agent2.win.conf
 
-set ZABBIX_CONF_PATH=c:\zabbix_agent2_scripts\conf\zabbix_agent2.win.conf
+
+:: Linux
+set LINUX_ZABBIX_REPO_ROOT=/home/mikhail/git/%REPO%
+set LINUX_MAKEFILE_FOR_WIN_PATH=%LINUX_ZABBIX_REPO_ROOT%/src/go/Makefile.am
+
+set LINUX_MACHINE_USER=mikhail
+set LINUX_MACHINE_IP=192.168.56.201
+set LINUX_MACHINE_PASSWORD="password"
