@@ -10,7 +10,7 @@ set WIN_ZABBIX_CONF_PATH=c:\zabbix_agent2_scripts_sshfs\conf\zabbix_agent2.win.c
 
 :: Linux
 set LINUX_ZABBIX_REPO_ROOT=/home/mikhail/git/%REPO%
-set LINUX_MAKEFILE_FOR_WIN_PATH=%LINUX_ZABBIX_REPO_ROOT%/src/go/Makefile.am
+set LINUX_MAKEFILE_FOR_WIN_PATH=%LINUX_ZABBIX_REPO_ROOT%/build/mingw/Makefile
 
 set LINUX_MACHINE_USER=mikhail
 set LINUX_MACHINE_IP=192.168.56.201
