@@ -1,3 +1,5 @@
+@echo off
+
 :: Common
 set REPO=zabbix_agent_win
 
