@@ -2,7 +2,7 @@
 set REPO=zabbix_agent_win
 
 :: Win
-set WIN_ZABBIX_REPO_ROOT=z:\git\%COM_REPO%
+set WIN_ZABBIX_REPO_ROOT=z:\git\%REPO%
 set WIN_PCRE_DIR=c:\go-libs\pcre64
 set WIN_OPENSSL_DIR=c:\go-libs\openssl64
 set WIN_ZABBIX_CONF_PATH=c:\zabbix_agent2_scripts_sshfs\conf\zabbix_agent2.win.conf
