@@ -1,0 +1,6 @@
+Enable older fping to work in non-privileged mode, when setcap does not help:
+
+sudo chown root:root fping-2.4
+sudo chmod u+s fping-2.4
+
+./fping-2.4 127.0.0.1
