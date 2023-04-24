@@ -10,18 +10,28 @@ dst = "127.0.0.1"
 
 RUN_WITH_SUDO = False
 
+if RUN_WITH_SUDO:
+    sudo="sudo "
+else:
+    sudo=""
+
+MODE_GET_INTERVAL_OPTION = 0   # run fping in way similar to get_interval_option() in src/libs/zbxicmpping/icmpping.c
+MODE_GET_DEFAULT_INTERVAL = 1  # get default intervals from help messages
+
+MODE = MODE_GET_INTERVAL_OPTION
+
 for version in VERSIONS:
     fping_bin_file_path = os.path.join(bin_dir, "fping-%s" % version)
 
     print("\n==================== fping-%s ====================\n" % version)
 
-    if RUN_WITH_SUDO:
-        sudo="sudo "
+    if MODE == MODE_GET_INTERVAL_OPTION:
+        for i in INTERVALS:
+            print("\n---------- interval: %d ----------\n" % i)
+            command = "%s%s -c1 -t50 -i%u %s" % (sudo, fping_bin_file_path, i, dst)
+            print("%s\n" % command)
+            os.system(command)
     else:
-        sudo=""
-
-    for i in INTERVALS:
-        print("\n---------- interval: %d ----------\n" % i)
-        command = "%s%s -c1 -t50 -i%u %s" % (sudo, fping_bin_file_path, i, dst)
-        print("%s\n" % command)
-        os.system(command)
+            command = '%s%s -h | grep interval | grep default' % (sudo, fping_bin_file_path)
+            print("%s\n" % command)
+            os.system(command)
