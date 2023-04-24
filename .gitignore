@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# exclude fping binaries and logs
+fping_tools/bin
+fping_tools/output
+fping_tools/log.txt
+fping_tools/fping-2.4b2_to
