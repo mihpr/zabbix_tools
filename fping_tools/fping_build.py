@@ -40,7 +40,11 @@ if not os.path.exists(bin_dir):
 
 # N.B. A trailing comma must be placed in case a Python tuple contains only one value:
 # Example: versions = ("3.0",)
-versions = ("3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "3.16", "4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
+VESRIONS = ("3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "3.16", "4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
+# VESRIONS = ("4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
+
+# --enable-safe-limits option is present in fping >= 4.0
+ENABLE_SAFE_LIMITS = False  # default False
 
 with open(LOG_FILE_PATH, 'w') as logfile:
     time_start = datetime.datetime.now()
@@ -48,12 +52,16 @@ with open(LOG_FILE_PATH, 'w') as logfile:
         logfile.write("%s    %s\n" % (datetime.datetime.now(), s))
 
     log("Build started.")
-    for version in versions:
+    for version in VESRIONS:
         try:
+            if eval(version) >= 4 and ENABLE_SAFE_LIMITS:
+                safe_limits_key = " --enable-safe-limits"
+            else:
+                safe_limits_key = ""
+
             fping_bin_file_path = os.path.join(bin_dir, "fping-%s" % version)
             if os.path.exists(fping_bin_file_path):
                 os.remove(fping_bin_file_path)
-
 
             fping6_bin_file_path = os.path.join(bin_dir, "fping6-%s" % version)
             if os.path.exists(fping6_bin_file_path):
@@ -73,7 +81,7 @@ with open(LOG_FILE_PATH, 'w') as logfile:
 
             os.system("cd %s; tar -xzvf %s" % (output_dir, fping_archive_file))
             build_dir = os.path.join(output_dir, "fping-%s" % version)
-            os.system("cd %s; ./configure --prefix=${PWD} --exec-prefix=${PWD} --enable-ipv4 --enable-ipv6; make; make install" % (build_dir,))
+            os.system("cd %s; ./configure --prefix=${PWD} --exec-prefix=${PWD} --enable-ipv4 --enable-ipv6%s; make; make install" % (build_dir, safe_limits_key))
 
             os.system("cp %s %s" % (os.path.join(build_dir, "sbin", "fping"), fping_bin_file_path))
             if version == "3.0":
@@ -109,12 +117,11 @@ with open(LOG_FILE_PATH, 'w') as logfile:
     print ("\n\n\n---===== Build finsihed =====---\n")
     print(s)
 
-
 # Testing
 
 print ("\n\n\n---===== Testing =====---\n")
-for version in versions:
-    cmd = "cd %s; ./fping-%s 8.8.8.8" % (bin_dir, version)
+for version in VESRIONS:
+    cmd = "cd %s; ./fping-%s 127.0.0.1" % (bin_dir, version)
     # print (cmd)
     print ("Testing fping-%s..." % version)
     os.system(cmd)
