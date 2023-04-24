@@ -19,7 +19,7 @@ Known limitations:
 fping-3.0 built by this script is known to be unable to run in non privileged mode.
 
 IPv6 seems to be supported in fping 3.x versions starting from fping-3.3:
-Add --enable-ipv4 and --enable-ipv6 options to configure (Niclas Zeising)
+    Add --enable-ipv4 and --enable-ipv6 options to configure (Niclas Zeising)
 
 Before fping 4.0, there were different binaries for IPv4 and IPv6: fping, fping6.
 Since fping 4.0, fping and fping6 are unified into one binary fping.
@@ -39,7 +39,7 @@ if not os.path.exists(bin_dir):
     os.makedirs(bin_dir)
 
 # N.B. A trailing comma must be placed in case a Python tuple contains only one value:
-# Example: versions("3.0",)
+# Example: versions = ("3.0",)
 versions = ("3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "3.16", "4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
 
 with open(LOG_FILE_PATH, 'w') as logfile:
@@ -74,15 +74,18 @@ with open(LOG_FILE_PATH, 'w') as logfile:
             os.system("cd %s; tar -xzvf %s" % (output_dir, fping_archive_file))
             build_dir = os.path.join(output_dir, "fping-%s" % version)
             os.system("cd %s; ./configure --prefix=${PWD} --exec-prefix=${PWD} --enable-ipv4 --enable-ipv6; make; make install" % (build_dir,))
-            
+
             os.system("cp %s %s" % (os.path.join(build_dir, "sbin", "fping"), fping_bin_file_path))
-            os.system("cd %s; sudo setcap cap_net_raw+ep fping-%s" % (bin_dir, version))
+            if version == "3.0":
+                os.system("cd %s; sudo chown root:root fping-%s; sudo chmod u+s fping-%s" % (bin_dir, version, version))
+            else:
+                os.system("cd %s; sudo setcap cap_net_raw+ep fping-%s" % (bin_dir, version))
 
             if os.path.exists(os.path.join(build_dir, "sbin", "fping6")):
                 fping6_is_separate_binary = True
             else:
                 fping6_is_separate_binary = False
-                
+
             if fping6_is_separate_binary:
                 os.system("cp %s %s" % (os.path.join(build_dir, "sbin", "fping6"), fping6_bin_file_path))
                 os.system("cd %s; sudo setcap cap_net_raw+ep fping6-%s" % (bin_dir, version))
