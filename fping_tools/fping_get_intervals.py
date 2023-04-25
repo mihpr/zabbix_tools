@@ -54,7 +54,9 @@ for version in VERSIONS:
                     print("ret is None")
             elif MODE == MODE_GET_INTERVAL_OPTION_SYSTEM:
                 print("%s\n" % cmd)
+                print("<BEGIN>")
                 os.system(cmd)
+                print("<END>")
     else:
             cmd = '%s%s -h | grep interval | grep default' % (sudo, fping_bin_file_path)
             print("%s\n" % cmd)
