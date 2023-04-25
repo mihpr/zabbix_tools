@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import os
+import subprocess
+import pprint
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 bin_dir = os.path.join(CURRENT_DIR, "bin")
@@ -15,23 +17,45 @@ if RUN_WITH_SUDO:
 else:
     sudo=""
 
-MODE_GET_INTERVAL_OPTION = 0   # run fping in way similar to get_interval_option() in src/libs/zbxicmpping/icmpping.c
-MODE_GET_DEFAULT_INTERVAL = 1  # get default intervals from help messages
+MODE_GET_INTERVAL_OPTION_SUBPROCESS = 0  # run fping in way similar to get_interval_option() in src/libs/zbxicmpping/icmpping.c
+MODE_GET_INTERVAL_OPTION_SYSTEM     = 1  # run fping in way similar to get_interval_option() in src/libs/zbxicmpping/icmpping.c
+MODE_GET_DEFAULT_INTERVAL           = 2  # get default intervals from help messages
 
-MODE = MODE_GET_INTERVAL_OPTION
+# Set mode here
+MODE = MODE_GET_INTERVAL_OPTION_SYSTEM
+
+pp = pprint.PrettyPrinter()
 
 for version in VERSIONS:
     fping_bin_file_path = os.path.join(bin_dir, "fping-%s" % version)
 
     print("\n==================== fping-%s ====================\n" % version)
 
-    if MODE == MODE_GET_INTERVAL_OPTION:
+    if MODE in (MODE_GET_INTERVAL_OPTION_SUBPROCESS, MODE_GET_INTERVAL_OPTION_SYSTEM):
         for i in INTERVALS:
+
             print("\n---------- interval: %d ----------\n" % i)
-            command = "%s%s -c1 -t50 -i%u %s" % (sudo, fping_bin_file_path, i, dst)
-            print("%s\n" % command)
-            os.system(command)
+            cmd = "%s%s -c1 -t50 -i%u %s" % (sudo, fping_bin_file_path, i, dst)
+
+            if MODE == MODE_GET_INTERVAL_OPTION_SUBPROCESS:
+                ret = None
+                try:
+                    ret = subprocess.run(cmd, shell=True, check=True, capture_output=True)
+                except Exception as e:
+                    print("Exception:", e)
+
+                print("---=== subprocess.CompletedProcess: ===---")
+                if ret is not None:
+                    print("args       :", ret.args)
+                    print("returncode :", ret.returncode)
+                    print("stdout     :", ret.stdout)
+                    print("stderr     :", ret.stderr)
+                else:
+                    print("ret is None")
+            elif MODE == MODE_GET_INTERVAL_OPTION_SYSTEM:
+                print("%s\n" % cmd)
+                os.system(cmd)
     else:
-            command = '%s%s -h | grep interval | grep default' % (sudo, fping_bin_file_path)
-            print("%s\n" % command)
-            os.system(command)
+            cmd = '%s%s -h | grep interval | grep default' % (sudo, fping_bin_file_path)
+            print("%s\n" % cmd)
+            os.system(cmd)
