@@ -35,7 +35,7 @@ fi
 # server
 if [ "$SERVER_ENABLED" = true ]; then
     make dbschema
-    
+
     # postgres
     sudo -u postgres createdb -O $DB_USER -E Unicode -T template0 $DB_NAME
 
@@ -44,7 +44,7 @@ if [ "$SERVER_ENABLED" = true ]; then
     # stop here if you are creating database for Zabbix proxy
     cat images.sql | sudo -u $DB_USER psql $DB_NAME
     cat data.sql | sudo -u $DB_USER psql $DB_NAME
-    
+
     # timescale
     if [ "$TIMESCALE_ENABLED" = true ]; then
         echo "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;" | sudo -u postgres psql $DB_NAME
