@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-DB_NAME="zabbix"
+# DB_NAME="zabbix"
+
+# DB_NAME="snmp"
+
+DB_NAME="host_tags"
+
+
+# DB_NAME="index_7_0"
+# DB_NAME="index_6_4"
+# DB_NAME="index_7_0"
+
 
 #################################
 SERVER_ENABLED=true
 TIMESCALE_ENABLED=false
-PROXY_ENABLED=true
+PROXY_ENABLED=false
 ################################
 
 DROP_DATABASE_ENABLED_SERVER=false
@@ -32,10 +42,13 @@ if [ "$DROP_DATABASE_ENABLED_PROXY" = true ]; then
     sudo -u postgres dropdb --if-exists $DB_NAME_PROXY
 fi
 
+
+if [ "$SERVER_ENABLED" = true ] || [ "$PROXY_ENABLED" = true ] ; then
+    make dbschema
+fi
+
 # server
 if [ "$SERVER_ENABLED" = true ]; then
-    make dbschema
-
     # postgres
     sudo -u postgres createdb -O $DB_USER -E Unicode -T template0 $DB_NAME
 
