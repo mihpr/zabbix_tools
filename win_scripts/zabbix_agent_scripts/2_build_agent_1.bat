@@ -1,6 +1,5 @@
 call variables1.bat
 
-::cd "c:\zabbix1\zabbix-%version%\build\win32\project"
 cd "c:\zabbix1\zabbix*\build\win32\project"
 
 mingw32-make clean

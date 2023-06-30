@@ -12,4 +12,7 @@ cd "C:\zabbix1\zabbix*\bin\win64
 set zabbix_agentd_dir=%cd%
 cd %original_dir%
 
-%zabbix_agentd_dir%\zabbix_agentd.exe --config "C:\zabbix_agent_scripts\conf\zabbix_agentd.win.conf" --foreground
+::%zabbix_agentd_dir%\zabbix_agentd.exe --config "C:\zabbix_agent_scripts\conf\zabbix_agentd.win.conf" --foreground
+%zabbix_agentd_dir%\zabbix_agentd.exe --foreground
+
+
