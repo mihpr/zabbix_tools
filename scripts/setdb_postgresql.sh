@@ -15,7 +15,7 @@ CREATE_USER_ENABLED=false
 
 # Const settings
 DB_USER="zabbix"
-DB_NAME_PROXY=${DB_NAME}-proxy
+DB_NAME_PROXY=${DB_NAME}_proxy
 
 
 # user
