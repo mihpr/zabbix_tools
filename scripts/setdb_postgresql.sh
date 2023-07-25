@@ -1,22 +1,12 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-# DB_NAME="zabbix"
-
-# DB_NAME="snmp"
-
-DB_NAME="host_tags"
-
-
-# DB_NAME="index_7_0"
-# DB_NAME="index_6_4"
-# DB_NAME="index_7_0"
-
+DB_NAME="zabbix"
 
 #################################
 SERVER_ENABLED=true
 TIMESCALE_ENABLED=false
-PROXY_ENABLED=false
+PROXY_ENABLED=true
 ################################
 
 DROP_DATABASE_ENABLED_SERVER=false
@@ -25,7 +15,7 @@ CREATE_USER_ENABLED=false
 
 # Const settings
 DB_USER="zabbix"
-DB_NAME_PROXY=${DB_NAME}_proxy
+DB_NAME_PROXY=${DB_NAME}-proxy
 
 
 # user
