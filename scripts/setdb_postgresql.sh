@@ -25,11 +25,11 @@ fi
 
 # drop database
 if [ "$DROP_DATABASE_ENABLED_SERVER" = true ]; then
-    sudo -u postgres dropdb --if-exists $DB_NAME
+    sudo -u postgres dropdb --force --if-exists $DB_NAME
 fi
 
 if [ "$DROP_DATABASE_ENABLED_PROXY" = true ]; then
-    sudo -u postgres dropdb --if-exists $DB_NAME_PROXY
+    sudo -u postgres dropdb --force --if-exists $DB_NAME_PROXY
 fi
 
 
