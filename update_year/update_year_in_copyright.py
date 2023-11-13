@@ -1,5 +1,5 @@
 """
-This file performs the following opeation to each python file in a repository:
+This file performs the following opeation to each file in a repository:
     - Changes year in copyright message
 
 How to use it:
