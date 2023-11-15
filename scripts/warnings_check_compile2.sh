@@ -31,17 +31,6 @@ LOG_DIR="${HOME}/iwyu_log/${START_DATE}/"
 echo $LOG_DIR
 mkdir -p "${LOG_DIR}"
 
-warnings_check_compile() {
-	LOG_FILE="${LOG_DIR}log_warnings_${1}.txt"
-
-	sudo git clean -dfx
-	sh ./bootstrap.sh
-
-	sh ./configure $DB_KEY --enable-server --enable-agent --enable-proxy --with-libcurl --with-libxml2 --with-openssl --enable-ipv6 --with-net-snmp
-
-	make -j 1 2>&1 | tee "${LOG_FILE}"
-}
-
 iwyu_compile() {
 	LOG_FILE_IWYU=${LOG_DIR}log_iwyu_${1}.txt
 	LOG_FILE_MAKE=${LOG_DIR}log_iwyu_make_${1}.txt
@@ -74,11 +63,9 @@ git merge --squash ${BRANCH_DEV}
 git commit -m "simulated merge"
 
 git checkout ${branch_release_test}
-warnings_check_compile 0
 iwyu_compile 0
 
 git checkout ${branch_dev_test}
-warnings_check_compile 1
 iwyu_compile 1
 
 END_DATE=$(date '+%Y-%m-%d %H:%M:%S %z')
