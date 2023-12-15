@@ -3,7 +3,7 @@
 
 DB_HOST=localhost
 DB_USER="zabbix"
-DB_NAME="last_foreach"
+DB_NAME="zabbix"
 DB_POSTGRES_PASSWORD="password"
 
 DB_DROP=true
@@ -14,4 +14,4 @@ if [ "${DB_DROP}" = true ]; then
 fi
 
 PGPASSWORD=${DB_POSTGRES_PASSWORD} createdb -U postgres -h ${DB_HOST} -O ${DB_USER} -E Unicode -T template0 ${DB_NAME}
-PGPASSWORD=${DB_POSTGRES_PASSWORD} psql -U postgres -d ${DB_NAME} -h ${DB_HOST} -f ~/dumps/${DB_NAME}.sql
+PGPASSWORD=${DB_POSTGRES_PASSWORD} psql -U postgres -d ${DB_NAME} -h ${DB_HOST} -f ~/dumps/pg_${DB_NAME}.sql

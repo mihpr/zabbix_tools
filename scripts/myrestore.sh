@@ -2,7 +2,7 @@
 
 DB_HOST=localhost
 DB_USER="zabbix"
-DB_NAME="last_foreach"
+DB_NAME="zabbix"
 DB_PASSWORD="password"
 
 DB_DROP=true
@@ -17,4 +17,4 @@ fi
 # Zabbix  5.0
 mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} --execute="create database ${DB_NAME} character set utf8 collate utf8_bin;"
 
-mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < ~/dumps/${DB_NAME}_mysql.sql
+mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < ~/dumps/my_${DB_NAME}.sql

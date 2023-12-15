@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-DB_NAME="zabbix"
+DB_NAME="pdf"
 
 #################################
 SERVER_ENABLED=true
 TIMESCALE_ENABLED=false
-PROXY_ENABLED=true
+PROXY_ENABLED=false
 ################################
 
 DROP_DATABASE_ENABLED_SERVER=false
