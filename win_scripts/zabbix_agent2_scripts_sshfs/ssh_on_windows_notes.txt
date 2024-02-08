@@ -1,0 +1,18 @@
+Use the SSH server from MSYS at Windows machine.
+
+Generate keys at MSYS:
+ssh-keygen -A
+
+At MSYS, create $HOME/.ssh/authorized_keys file and add the public key from the Linux machine
+
+Print the log in MSYS
+tail -Fn +1 sshd.log
+
+Run SSH daemon in MSYS using full path:
+/usr/bin/sshd -E /home/MihailsPrihodko/sshd.log
+
+Log in from Linux machine to Windows machine:
+ssh AzureAD+MihailsPrihodko@192.168.56.1
+
+Open cmd by running in MSYS
+cmd
