@@ -1,7 +1,7 @@
 import os
 
-# 1. Define branches to delete
-# 2. Copy script to the repo.
+# 1. Copy script to the repo.
+# 2. Define branches to delete.
 # 3. Run script: python clean_branches.py
 
 branches_to_delete = (
