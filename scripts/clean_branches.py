@@ -13,5 +13,5 @@ branches_to_delete = (
 for branch in branches_to_delete:
     os.system("git branch -D %s" % branch)
 
-print("Branches afte deletion:")
+print("Branches after deletion:")
 os.system("git branch")
