@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-DB_NAME="pdf"
+DB_NAME="zabbix"
 
 #################################
 SERVER_ENABLED=true
@@ -42,16 +42,20 @@ if [ "$SERVER_ENABLED" = true ]; then
     # postgres
     sudo -u postgres createdb -O $DB_USER -E Unicode -T template0 $DB_NAME
 
-    cd database/postgresql
-    cat schema.sql | sudo -u $DB_USER psql $DB_NAME
+    cat database/postgresql/schema.sql | sudo -u $DB_USER psql $DB_NAME
     # stop here if you are creating database for Zabbix proxy
-    cat images.sql | sudo -u $DB_USER psql $DB_NAME
-    cat data.sql | sudo -u $DB_USER psql $DB_NAME
+    cat database/postgresql/images.sql | sudo -u $DB_USER psql $DB_NAME
+    cat database/postgresql/data.sql | sudo -u $DB_USER psql $DB_NAME
 
     # timescale
     if [ "$TIMESCALE_ENABLED" = true ]; then
         echo "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;" | sudo -u postgres psql $DB_NAME
-        cat timescaledb.sql | sudo -u $DB_USER psql $DB_NAME
+        if [ -f 'database/postgresql/timescaledb.sql' ]; then
+            cat database/postgresql/timescaledb.sql | sudo -u $DB_USER psql $DB_NAME
+        elif [ -f 'database/postgresql/timescaledb/schema.sql' ]; then
+            # after restructuring in ZBX-22307
+            cat database/postgresql/timescaledb/schema.sql | sudo -u $DB_USER psql $DB_NAME
+        fi
     fi
 fi
 
@@ -60,6 +64,5 @@ fi
 if [ "$PROXY_ENABLED" = true ]; then
     sudo -u postgres createdb -O $DB_USER -E Unicode -T template0 $DB_NAME_PROXY
 
-    cd database/postgresql
-    cat schema.sql | sudo -u $DB_USER psql $DB_NAME_PROXY
+    cat database/postgresql/schema.sql | sudo -u $DB_USER psql $DB_NAME_PROXY
 fi
