@@ -6,7 +6,7 @@ DB_NAME_PROXY=${DB_NAME}_proxy
 DB_HOST="localhost"
 
 # Zabbix 5.0
-ZABBIX_5=true
+ZABBIX_5=false
 
 DB_USER="zabbix"
 DB_PASSWORD="password"
