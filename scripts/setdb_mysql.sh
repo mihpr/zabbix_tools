@@ -1,28 +1,40 @@
 #!/usr/bin/env bash
 
+# Note: symbols ".", "-" are not allowed in MySQL. Use "_" instead.
 DB_NAME="zabbix"
 DB_NAME_PROXY=${DB_NAME}_proxy
+DB_HOST="localhost"
 
-# Note: symbols ".", "-" are not allowed in MySQL. Use "_" instead.
-
+# Zabbix 5.0
+ZABBIX_5=true
 
 DB_USER="zabbix"
+DB_PASSWORD="password"
+DB_ROOT_PASSWORD="password"
 
-sudo mysql -uroot -ppassword --execute="create database $DB_NAME character set utf8mb4 collate utf8mb4_bin;"
-sudo mysql -uroot -ppassword --execute="grant all privileges on $DB_NAME.* to $DB_USER@'localhost';"
+if [ "$ZABBIX_5" = false ]; then
+    charset="utf8mb4"
+    collate="utf8mb4_bin"
+else
+    charset="utf8"
+    collate="utf8_bin"
+fi
 
 
 make dbschema
 
-cd database/mysql
-mysql -uzabbix -ppassword $DB_NAME < schema.sql
+sudo mysql -uroot -p${DB_ROOT_PASSWORD} --execute="create database ${DB_NAME} character set ${charset} collate ${collate};"
+sudo mysql -uroot -p${DB_ROOT_PASSWORD} --execute="grant all privileges on ${DB_NAME}.* to '${DB_USER}'@'${DB_HOST}';"
+
+mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < database/mysql/schema.sql
 # stop here if you are creating database for Zabbix proxy
-mysql -uzabbix -ppassword $DB_NAME < images.sql
-mysql -uzabbix -ppassword $DB_NAME < data.sql
+mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < database/mysql/images.sql
+mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < database/mysql/data.sql
 
 
 # proxy
-sudo mysql -uroot -ppassword --execute="create database $DB_NAME_PROXY character set utf8mb4 collate utf8mb4_bin;"
-sudo mysql -uroot -ppassword --execute="grant all privileges on $DB_NAME_PROXY.* to $DB_USER@'localhost';"
-mysql -uzabbix -ppassword $DB_NAME_PROXY < schema.sql
+sudo mysql -uroot -p${DB_ROOT_PASSWORD} --execute="create database ${DB_NAME_PROXY} character set ${charset} collate ${collate};"
+sudo mysql -uroot -p${DB_ROOT_PASSWORD} --execute="grant all privileges on ${DB_NAME_PROXY}.* to '${DB_USER}'@'${DB_HOST}';"
+
+mysql -u${DB_USER} -p${DB_PASSWORD} ${DB_NAME_PROXY} < database/mysql/schema.sql
 
