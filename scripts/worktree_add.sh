@@ -5,8 +5,13 @@
 WORKTREE_DIR=$1
 BRANCH=$2
 
+if [[ -z "$BRANCH" ]]; then
+	BRANCH="feature/${WORKTREE_DIR}"
+fi
+
 CURRENT_DIR=$(pwd)
 WEBROOT=/var/www/html
+
 
 git worktree add --track -b ${BRANCH} "${CURRENT_DIR}/../${WORKTREE_DIR}" remotes/origin/${BRANCH}
 

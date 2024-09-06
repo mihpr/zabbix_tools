@@ -5,6 +5,10 @@
 WORKTREE_DIR=$1
 BRANCH=$2
 
+if [[ -z "$BRANCH" ]]; then
+	BRANCH="feature/${WORKTREE_DIR}"
+fi
+
 CURRENT_DIR=$(pwd)
 WEBROOT=/var/www/html
 
