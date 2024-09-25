@@ -11,6 +11,6 @@ DB_KEY="--with-postgresql"
 sudo git clean -dfx
 sh ./bootstrap.sh
 
-sh ./configure --prefix=${PWD}/install $DB_KEY --enable-server --enable-agent --enable-agent2 --enable-proxy --with-libcurl --with-libxml2 --with-openssl --enable-ipv6 --with-net-snmp
+sh ./configure --prefix=${PWD} $DB_KEY --enable-server --enable-agent --enable-agent2 --enable-proxy --with-libcurl --with-libxml2 --with-openssl --enable-ipv6 --with-net-snmp
 
 make -j -s && make -s install
