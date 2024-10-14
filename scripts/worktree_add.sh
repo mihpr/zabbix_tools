@@ -3,8 +3,9 @@
 # Run this script from the repository dir.
 
 # Basic usage example:
-# Navigate to the mail repository dir
-# Checkout and pull the release branch and run the script like this:
+# - Navigate to the main repository dir
+# - Checkout and pull the release branch
+# - Run the script like so:
 # worktree_add.sh ZBXNEXT-9397-7.0
 
 WORKTREE_DIR=$1
