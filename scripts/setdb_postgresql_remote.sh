@@ -53,7 +53,7 @@ if [ "$SERVER_ENABLED" = true ]; then
 
 	# timescale
 	if [ "$TIMESCALE_ENABLED" = true ]; then
-		echo "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;" | sudo -u postgres psql $DB_NAME
+		echo "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;" | PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME
 		if [ -f 'database/postgresql/timescaledb.sql' ]; then
 			PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -f 'database/postgresql/timescaledb.sql' -d $DB_NAME
 		elif [ -f 'database/postgresql/timescaledb/schema.sql' ]; then
