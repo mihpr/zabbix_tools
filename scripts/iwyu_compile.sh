@@ -19,9 +19,10 @@
 
 # ---=== [Settings] ===---
 
-BRANCH_DEV="feature/ZBX-25390-6.0"
+STARTED_AT=$(date +"%Y-%m-%d_%H-%M-%S")
+BRANCH_DEV="feature/ZBX-25404-6.0"
 BRANCH_RELEASE="release/6.0"
-LOG_DIR="${HOME}/scripts/iwyu_log/"
+LOG_DIR="${HOME}/scripts/iwyu_log/${STARTED_AT}/"
 LOG_PREFIX="IWUY_WRAPPER"
 
 
@@ -49,8 +50,7 @@ run_test() {
 # ---=== [Run] ===---
 
 # Preparing for tests
-echo "${LOG_PREFIX}: Removing old log dir..."
-rm -rf ${LOG_DIR}
+echo "${LOG_PREFIX}: Started at ${STARTED_AT}"
 echo "${LOG_PREFIX}: Creating log dir..."
 mkdir -p ${LOG_DIR}
 echo "${LOG_PREFIX}: Cleaning uncommitted changes..."
@@ -86,3 +86,8 @@ git status
 
 echo "${LOG_PREFIX}: Starting test of the changes merged from the development barnch to the release barnch..."
 run_test "MERGED"
+
+# Finalizing after tests
+FINISHED_AT=$(date +"%Y-%m-%d_%H-%M-%S")
+echo "${LOG_PREFIX}: Started at  ${STARTED_AT}"
+echo "${LOG_PREFIX}: Finished at ${FINISHED_AT}"
