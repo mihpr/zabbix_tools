@@ -1,0 +1,1 @@
+plink -batch -pw %LINUX_MACHINE_PASSWORD% %LINUX_MACHINE_USER%@%LINUX_MACHINE_IP% cd %LINUX_ZBX_REPO_ROOT%; git clean -dfx; ./bootstrap.sh; ./configure --enable-agent --enable-agent2 --prefix=$(pwd)
