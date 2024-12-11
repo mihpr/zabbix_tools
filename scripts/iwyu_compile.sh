@@ -13,15 +13,16 @@
 # [Each time]
 # - Go to Zabbix repository in command line.
 # - Make sure there are no important uncommitted changes in the repo because they will be lost.
-# - Make sure the settings below are correct.
-# - Remember that old logs are deleted on test run.
-# - Run the script from the Zabbix repository.
-
-# ---=== [Settings] ===---
+# - Make sure the [Settings] below are correct.
+# - Run the script from the Zabbix repository (with no command line parameters).
+# A new folder will be created for logs during the test run.
+# - Compare logs with any text file comparion tool you like.
 
 STARTED_AT=$(date +"%Y-%m-%d_%H-%M-%S")
-BRANCH_DEV="feature/ZBX-25404-6.0"
-BRANCH_RELEASE="release/6.0"
+
+# ---=== [Settings] ===---
+BRANCH_DEV="feature/ZBX-25672-7.0"
+BRANCH_RELEASE="release/7.0"
 LOG_DIR="${HOME}/scripts/iwyu_log/${STARTED_AT}/"
 LOG_PREFIX="IWUY_WRAPPER"
 
@@ -58,19 +59,18 @@ git reset --hard
 git clean -dfx
 echo "${LOG_PREFIX}: Fetching from remote (with no merging)..."
 git fetch
-echo "${LOG_PREFIX}: Checking out the development baranch..."
+echo "${LOG_PREFIX}: Checking out the development branch..."
 git checkout ${BRANCH_DEV}
-echo "${LOG_PREFIX}: Pulling the development baranch..."
+echo "${LOG_PREFIX}: Pulling the development branch..."
 git pull
-echo "${LOG_PREFIX}:  Checking out the release baranch..."
+echo "${LOG_PREFIX}: Checking out the release branch..."
 git checkout ${BRANCH_RELEASE}
-echo "${LOG_PREFIX}: Pulling the release baranch..."
+echo "${LOG_PREFIX}: Pulling the release branch..."
 git pull
 
 # ---=== [Test RELEASE] ===---
 
-# Test the evelopment branch
-echo "${LOG_PREFIX}: Starting test of the development barnch..."
+echo "${LOG_PREFIX}: Starting test of the release branch..."
 run_test "RELEASE"
 
 # ---=== [Test MERGED] ===---
@@ -79,12 +79,12 @@ run_test "RELEASE"
 echo "${LOG_PREFIX}: Cleaning uncommitted changes..."
 git reset --hard
 git clean -dfx
-echo "${LOG_PREFIX}: Merging the changes from development barnch to the release branch with no commit..."
+echo "${LOG_PREFIX}: Merging the changes from development branch to the release branch with no commit..."
 git merge --no-commit ${BRANCH_DEV}
 echo "${LOG_PREFIX}: Checking status..."
 git status
 
-echo "${LOG_PREFIX}: Starting test of the changes merged from the development barnch to the release barnch..."
+echo "${LOG_PREFIX}: Starting test of the changes merged from the development branch to the release branch..."
 run_test "MERGED"
 
 # Finalizing after tests
