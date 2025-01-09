@@ -87,7 +87,11 @@ class PrettyTable:
         return '\n'.join(lines)
 
 def test_table(table_data, table_name, file_data):
-    print("Table: %s\n" % table_name)
+    rows_not_found = 0
+    rows_failed = 0
+    rows_passed = 0
+
+    print("Table: '%s'\n" % table_name)
 
     out = PrettyTable(("clock", "clock human", "itemid", "value_min", "avg", "value_max", "num", "num in files"))
 
@@ -102,18 +106,25 @@ def test_table(table_data, table_name, file_data):
 
         j = find_in_json(file_data, itemid, clock)
         if j is not None:
-            passed = "FAILED"
             if j["count"] == num:
-                passed = "passed"
-            num_in_files = "%d %s" % (j["count"], passed)
+                result = "passed"
+                rows_passed += 1
+            else:
+                result = "FAILED"
+                rows_failed += 1
+            num_in_files = "%d %s" % (j["count"], result)
         else:
             num_in_files = "NOT FOUND"
-
+            rows_not_found += 1
 
         table_row = [clock, clock_human, itemid, value_min, avg, value_max, num, num_in_files]
         out.add_row(table_row)
 
     print(out)
+    print("\nSummary for table '%s':" % table_name)
+    print("Rows NOT FOUND %d" % rows_not_found)
+    print("Rows FAILED    %d" % rows_failed)
+    print("Rows passed    %d" % rows_passed)
     print("\n")
 
 ########################################################################################################################
