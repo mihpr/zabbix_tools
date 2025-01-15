@@ -24,7 +24,7 @@ python3 trends_v4_zabbix_utils.py
 ```
 or
 ```
-python3 trends_v4_zabbix_utils.py > out.txt
+python3 trends_v3_psycopg2.py > out.txt
 ```
 or
 ```
