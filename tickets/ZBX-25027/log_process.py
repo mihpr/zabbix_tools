@@ -1,25 +1,21 @@
 import os
 import json
+from deserialize import deserialize
 
 # Define the file paths
-src = os.path.abspath("/tmp/zabbix_server.log")
-dst = os.path.abspath("/tmp/zabbix_server_out.log")
+src = os.path.abspath("/tmp/zabbix_proxy.log")
+dst = os.path.abspath("/tmp/zabbix_proxy_out.log")
 
 token = "[ZBX-25468] "
-# key_order = ['now', 'nextcheck', 'delayed', 'key', 'type', 'value_type', 'state', 'status', 'location', 'poller_type', 'error', 'host', 'proxyid']
-# key_order = ['now', 'nextcheck']
-# key_order = ['now', 'port']
-key_order = None
+
+key_order = None # all keys
+# key_order = ['si_itemid', 'i_hostid', 'i_interfaceid', 'i_lastlogsize', 'i_revision', 'i_templateid', 'now', 'i_nextcheck', 'i_mtime', 'i_item_data_expected_from', 'h_data_expected_from', 'h_maintenance_from', 'i_type', 'i_value_type', 'i_poller_type', 'i_state', 'i_db_state', 'i_inventory_link', 'i_location', 'i_flags', 'i_status', 'i_queue_priority', 'i_update_triggers', 'h_maintenance_status', 'h_maintenance_type', 'h_host_status', 'h_monitored_by', 'delayed', 'key', 'port', 'error', 'delay', 'delay_ex', 'history_period', 'timeout']
+# key_order = ['i_itemid', 'now', 'delayed']
 
 # Open the source file in read mode and the destination file in write mode
 with open(src, 'r') as src_file, open(dst, 'w') as dst_file:
-
     # Read each line from the source file
     for line in src_file:
-        if key_order is None:
-            dst_file.write(line)
-            continue
-
         # Check if the line contains "[ZBX-25468]"
         if token in line:
             # Extract everything after "[ZBX-25468]"
@@ -28,14 +24,28 @@ with open(src, 'r') as src_file, open(dst, 'w') as dst_file:
             # Parse the JSON string into a dictionary
             data = json.loads(json_string)
 
-            # Create a new dictionary with the keys in the desired order
+            d = dict()
 
-            ordered_data = {key: data[key] for key in key_order}
+            buf_base64 = deserialize(data[0])
+            d |= buf_base64
+            d['key'] = data[1]
+            d['port'] = data[2]
+            d['error'] = data[3]
+            d['delay'] = data[4]
+            d['delay_ex'] = data[5]
+            d['history_period'] = data[6]
+            d['timeout'] = data[7]
 
-            # Convert the ordered dictionary back to a JSON string
-            # ordered_json_string = json.dumps(ordered_data, indent=4)
-            ordered_json_string = json.dumps(ordered_data)
+            if key_order is None:
+                key_order = d.keys()
 
-            dst_file.write(prefix + token + ordered_json_string + "\n")
+            ordered_dict = {}
+            for key in key_order:
+                if key in d:
+                    ordered_dict[key] = d[key]
+                else:
+                    print(f"Error: '{key}' is missing in data")
+
+            dst_file.write(prefix + token + str(ordered_dict) + "\n")
         else:
             dst_file.write(line)
