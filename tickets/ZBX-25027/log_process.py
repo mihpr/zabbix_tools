@@ -3,8 +3,8 @@ import json
 from deserialize import deserialize
 
 # Define the file paths
-src = os.path.abspath("/tmp/zabbix_proxy.log")
-dst = os.path.abspath("/tmp/zabbix_proxy_out.log")
+src = os.path.abspath("/tmp/ZBX-25468.log")
+dst = os.path.abspath("/tmp/ZBX-25468_out.log")
 
 token = "[ZBX-25468] "
 
@@ -22,7 +22,9 @@ with open(src, 'r') as src_file, open(dst, 'w') as dst_file:
             prefix  = line.split(token)[0]
             json_string = line.split(token)[1]
             # Parse the JSON string into a dictionary
-            data = json.loads(json_string)
+            # This does not work with data like 'net.if.in["eth0"]': data = json.loads(json_string)
+            json_string = json_string[2:-2]
+            data = json_string.split('","')
 
             d = dict()
 
