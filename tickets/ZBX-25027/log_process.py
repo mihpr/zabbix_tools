@@ -9,7 +9,7 @@ dst = os.path.abspath("/tmp/ZBX-25468_out.log")
 token = "[ZBX-25468] "
 
 key_order = None # all keys
-# key_order = ['si_itemid', 'i_hostid', 'i_interfaceid', 'i_lastlogsize', 'i_revision', 'i_templateid', 'now', 'i_nextcheck', 'i_mtime', 'i_item_data_expected_from', 'h_data_expected_from', 'h_maintenance_from', 'i_type', 'i_value_type', 'i_poller_type', 'i_state', 'i_db_state', 'i_inventory_link', 'i_location', 'i_flags', 'i_status', 'i_queue_priority', 'i_update_triggers', 'h_maintenance_status', 'h_maintenance_type', 'h_host_status', 'h_monitored_by', 'delayed', 'key', 'port', 'error', 'delay', 'delay_ex', 'history_period', 'timeout']
+# key_order = ['i_itemid', 'i_hostid', 'i_interfaceid', 'i_lastlogsize', 'i_revision', 'i_templateid', 'now', 'i_nextcheck', 'i_mtime', 'i_item_data_expected_from', 'h_data_expected_from', 'h_maintenance_from', 'i_type', 'i_value_type', 'i_poller_type', 'i_state', 'i_db_state', 'i_inventory_link', 'i_location', 'i_flags', 'i_status', 'i_queue_priority', 'i_update_triggers', 'h_maintenance_status', 'h_maintenance_type', 'h_host_status', 'h_monitored_by', 'delayed', 'key', 'port', 'error', 'delay', 'delay_ex', 'history_period', 'timeout']
 # key_order = ['i_itemid', 'now', 'delayed']
 
 # Open the source file in read mode and the destination file in write mode
