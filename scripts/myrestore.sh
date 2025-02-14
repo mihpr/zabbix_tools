@@ -8,6 +8,7 @@ DB_USER="zabbix"
 DB_PASSWORD="password"
 DB_DROP=true
 IS_ZABBIX_GT_5=true  # Set to true if Zabbix > 5.0, false otherwise
+DUMPS_HOME="${HOME}/dumps"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions
@@ -28,7 +29,7 @@ restore_db() {
     fi
 
     # Import the database dump
-    mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < ~/dumps/my_${DB_NAME}.sql
+    mysql -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} ${DB_NAME} < ${DUMPS_HOME}/my_${DB_NAME}.sql
 }
 
 # ----------------------------------------------------------------------------------------------------------------------

@@ -6,13 +6,14 @@
 DB_HOST=localhost
 DB_USER="zabbix"
 DB_PASSWORD="password"
+DUMPS_HOME="${HOME}/dumps"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------------------------------------------------
 backup_db() {
     local DB_NAME=$1
-    mysqldump -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} --databases ${DB_NAME} > ~/dumps/my_${DB_NAME}.sql
+    mysqldump -h ${DB_HOST} -u ${DB_USER} -p${DB_PASSWORD} --databases ${DB_NAME} > "${DUMPS_HOME}/my_${DB_NAME}.sql"
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
