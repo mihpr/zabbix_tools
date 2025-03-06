@@ -47,7 +47,10 @@ REPORT_EACH_N_ROWS = 1000
 # If set to True, it significantly (by tens of times) improves performance,
 # but requires more RAM for preloaded exported files.
 # Try setting to True and then set to False if the script consumes to much RAM.
-PRELOAD_ALL_EXPORTED_FILES = False
+PRELOAD_ALL_EXPORTED_FILES = True
+
+# Batch size for fetching trends from database tables with SQL queries.
+FETCH_BATCH_SIZE = 1
 
 ########################################################################################################################
 
@@ -66,6 +69,9 @@ atexit.register(cleanup)
 
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+# Records buffer
+row_buf = []
+
 def openTable(table, from_ts, to_ts):
     try:
         select_query = "select * from %s where clock >= %d and clock <= %d order by clock ASC, itemid ASC" % (table, int(from_ts), int(to_ts))
@@ -74,8 +80,18 @@ def openTable(table, from_ts, to_ts):
         print("Error while executing select query from table %s" % table, error)
 
 def fetchNextRow():
-    return cur.fetchone()
+    global row_buf
 
+    if FETCH_BATCH_SIZE == 1:
+        return cur.fetchone()
+
+    if not row_buf: # if empty
+        row_buf = cur.fetchmany(FETCH_BATCH_SIZE)
+
+        if not row_buf:
+            return None
+
+    return row_buf.pop(0)
 
 def read_json_from_file(file_path):
     with open(file_path, 'r') as file:
