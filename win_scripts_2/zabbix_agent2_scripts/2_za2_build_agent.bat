@@ -10,16 +10,19 @@ set original_dir=%cd%
 
 cd "%WIN_AGENT2_TEMP_DIR%\zabbix*\build\mingw"
 
-mingw32-make clean
-:: With PCRE 1 and OPENSSL
+:: mingw32-make clean
 
-:: Legacy
+:: Legacy with PCRE 1 and OPENSSL
 ::mingw32-make PCRE=c:\go-libs\pcre64 OPENSSL=c:\go-libs\openssl64 RFLAGS="-DZABBIX_VERSION_RC_NUM=64"
 
-:: with vcpkg
+:: With vcpkg
 set vckpg=%WIN_VCPKG_ROOT_DIR%\installed\x64-mingw-static
 
 set CGO_LDFLAGS="-lCrypt32"
-mingw32-make PCRE=%vckpg% OPENSSL=%vckpg% RFLAGS="-DZABBIX_VERSION_RC_NUM=64"
+:: With PCRE 1 and OpenSSL installed with vcpkg
+:: mingw32-make PCRE=%vckpg% OPENSSL=%vckpg% RFLAGS="-DZABBIX_VERSION_RC_NUM=64"
+
+:: With PCRE 2 and OpenSSL installed with vcpkg
+mingw32-make PCRE2=%vckpg% OPENSSL=%vckpg% RFLAGS="-DZABBIX_VERSION_RC_NUM=64"
 
 cd %original_dir%
