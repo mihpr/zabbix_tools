@@ -26,10 +26,11 @@ EXPORT_DIR="/tmp/files"
 # Time is in local timezone.
 # Format:
 #     YYYY-MM-DD HH:MM:SS
-#     2025-03-05 17:12:21
+#     TIME_FROM = "2025-03-05 13:00:00"
+#     TIME_TO   = "2025-03-05 21:00:00"
 # Meaning of the special value None:
-#     TIME_FROM: None removes any limit
-#     TIME_TO:   None is converted to the time when script stated execution
+#     TIME_FROM = None # removes any limit
+#     TIME_TO   = None # is converted to the time when script stated execution
 
 TIME_FROM = None
 TIME_TO = None
