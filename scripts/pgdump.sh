@@ -20,5 +20,5 @@ backup_db() {
 # Main
 # ----------------------------------------------------------------------------------------------------------------------
 
-backup_db "address"
-# backup_db "zabbix_proxy"
+backup_db "exposed"
+backup_db "exposed_proxy"

@@ -8,7 +8,7 @@ DB_USER="zabbix"
 DB_PASSWORD="password"
 DB_DROP=true
 IS_ZABBIX_GT_5=true  # Set to true if Zabbix > 5.0, false otherwise
-DUMPS_HOME="${HOME}/dumps"
+DUMPS_HOME="${HOME}/dumps/bak"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions
@@ -37,4 +37,4 @@ restore_db() {
 # ----------------------------------------------------------------------------------------------------------------------
 
 restore_db "zabbix_int"
-restore_db "zabbix_int_proxy"
+# restore_db "zabbix_int_proxy"

@@ -14,7 +14,7 @@ API_AUTH_METHOD_PASSWORD = 1
 API_URL="https://localhost/zabbix1/ui"
 
 # You may want set this to true if zabbix_utils shows Zabbix version related errors
-API_SKIP_VERSION_CHECK=False
+API_SKIP_VERSION_CHECK=True
 
 # API
 # Choose authentication method: select one API_AUTH_METHOD_TOKEN, API_AUTH_METHOD_PASSWORD

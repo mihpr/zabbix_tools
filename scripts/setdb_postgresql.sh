@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-DB_NAME="zabbix"
+# DB_NAME=contextmacro60
+# DB_NAME=trends
+# DB_NAME=queue
+# DB_NAME=zabbix
+# DB_NAME=winagent
+# DB_NAME=address3
+DB_NAME=deprecated
+# DB_NAME=vault
+# DB_NAME=exposed
 
 #################################
+# S
 SERVER_ENABLED=true
-TIMESCALE_ENABLED=false
-PROXY_ENABLED=false
-################################
+DROP_DATABASE_ENABLED_SERVER=true
+TIMESCALE_ENABLED=true
 
-DROP_DATABASE_ENABLED_SERVER=false
-DROP_DATABASE_ENABLED_PROXY=false
+# P
+PROXY_ENABLED=false
+DROP_DATABASE_ENABLED_PROXY=true
+################################
 CREATE_USER_ENABLED=false
 
 # Const settings

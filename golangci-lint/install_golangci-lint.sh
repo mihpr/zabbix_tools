@@ -5,7 +5,7 @@
 
 # IMPORTANT: It's highly recommended installing a specific version of golangci-lint available on the releases page:
 # https://github.com/golangci/golangci-lint/releases
-NEW_VER="v1.61.0"
+NEW_VER="v2.0.2"
 # DEST_DIR=$(go env GOPATH)/bin
 DEST_DIR=/usr/local/go/bin
 

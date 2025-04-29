@@ -29,7 +29,7 @@ cp ${PWD}/sbin/zabbix_agentd ${PWD}/sbin/zabbix_agentd_3.0
 
 env-ctrl -ti IntegrationTests
 
-#env-ctrl -ti testDiscoveryRules
+# env-ctrl -ti testDiscoveryRules
 
 # env-ctrl -ti testGoAgentDataCollection
 # env-ctrl -ti testItemTimeouts

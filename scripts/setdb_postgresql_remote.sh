@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Settings to be changed
-DB_NAME="confsync"
+DB_NAME="timescaledb217"
 DB_NAME_PROXY=${DB_NAME}_proxy
 
 DB_HOST="192.168.56.203"
@@ -13,8 +13,8 @@ DB_POSTGRES_PASSWORD="password" # password for admin user 'postgres'
 
 #################################
 SERVER_ENABLED=true
-TIMESCALE_ENABLED=false
-PROXY_ENABLED=true
+TIMESCALE_ENABLED=true
+PROXY_ENABLED=false
 ################################
 
 DROP_DATABASE_ENABLED_SERVER=true

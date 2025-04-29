@@ -40,8 +40,7 @@ if not os.path.exists(bin_dir):
 
 # N.B. A trailing comma must be placed in case a Python tuple contains only one value:
 # Example: versions = ("3.0",)
-VESRIONS = ("3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "3.16", "4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
-# VESRIONS = ("4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1",)
+VESRIONS = ("3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "3.16", "4.0", "4.1", "4.2", "4.3", "4.4",  "5.0", "5.1", "5.2")
 
 # --enable-safe-limits option is present in fping >= 4.0
 ENABLE_SAFE_LIMITS = False  # default False

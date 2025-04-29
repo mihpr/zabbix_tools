@@ -7,6 +7,7 @@ DB_HOST=localhost
 DB_USER="zabbix"
 DB_PASSWORD="password"
 DUMPS_HOME="${HOME}/dumps"
+# DUMPS_HOME="${HOME}/dumps/bak"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions

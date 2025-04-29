@@ -7,7 +7,7 @@ DB_HOST=localhost
 DB_USER="zabbix"
 DB_POSTGRES_PASSWORD="password"
 DB_DROP=true
-DUMPS_HOME="${HOME}/dumps"
+DUMPS_HOME="${HOME}/dumps/bak"
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions
@@ -33,5 +33,9 @@ restore_db() {
 # ----------------------------------------------------------------------------------------------------------------------
 
 # restore_db <from> <to>
-restore_db "address" "address2"
+# restore_db "address" "address2"
 # restore_db "zabbix_proxy" "zabbix_proxy2"
+
+
+restore_db "exposed" "exposed"
+restore_db "exposed_proxy" "exposed_proxy"
