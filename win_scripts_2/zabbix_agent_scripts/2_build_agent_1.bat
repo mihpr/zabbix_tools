@@ -26,6 +26,13 @@ set vcpkg="%WIN_VCPKG_ROOT_DIR%\installed\x64-windows-static"
 
 
 :: With PCRE2 OpenSSL and curl installed from vcpkg
+
+:: The following should be installed for doing this
+:: bootstrap-vcpkg.bat -disableMetrics
+:: vcpkg.exe install pcre2:x64-windows-static --classic
+:: vcpkg.exe install openssl:x64-windows-static --classic 
+:: vcpkg.exe install curl[ssl]:x64-windows-static --classic
+
 SET PCRE=PCRE2INCDIR="%vcpkg%\include" PCRE2LIBDIR="%vcpkg%\lib" 
 SET SSL=TLS=openssl TLSINCDIR="%vcpkg%\include" LIBS="$(LIBS) Crypt32.lib" TLSLIB="%vcpkg%\lib\libcrypto.lib" TLSLIB2="%vcpkg%\lib\libssl.lib"
 SET CURL=LIBS="$(LIBS) %vcpkg%\lib\libcurl.lib %vcpkg%\lib\zlib.lib Secur32.Lib" CFLAGS="$(CFLAGS) /D CURL_STATICLIB /D HAVE_LIBCURL -I %vcpkg%\include"
