@@ -36,3 +36,7 @@ taskkill /IM zabbix* /F
 
 
 ::"C:\Users\mikhail\Downloads\DrMemory-Windows-2.2.0-1\bin\drmemory.exe" -ignore_kernel -logdir ./drememory_log -- %zabbix_agentd_dir%\zabbix_agentd.exe -p
+
+:: Test key
+:: "%zabbix_agentd_dir%\zabbix_agentd.exe" --config "%WIN_AGENT_CONF_DIR%\zabbix_agentd.win.conf" ^
+:: 	-t "web.page.get[""http://user:pass@www.example.com""]"
