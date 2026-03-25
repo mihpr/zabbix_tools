@@ -12,7 +12,8 @@ git_branch_sfx = (
 
 jira= "ZBXNEXT-10448"
 db_type="MySQL"
-new_db_max_version_str="9.6"
+new_db_max_version_str1="9.6"
+new_db_max_version_str2="9.6.x"
 new_db_max_version_int="90699"
 author="mprihodko"
 
@@ -29,7 +30,7 @@ for rel_branch, feat_sfx in git_branch_sfx:
 
     file_path = "ChangeLog.d/feature/{}".format(jira)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    commit_msg = "A......PS. [{}] updated maximum supported {} version to {}".format(jira, db_type, new_db_max_version_str)
+    commit_msg = "A......PS. [{}] updated maximum supported {} version to {}".format(jira, db_type, new_db_max_version_str1)
     changelog = "{} ({})\n".format(commit_msg, author)
 
     with open(file_path, "w") as f:
@@ -50,7 +51,7 @@ for rel_branch, feat_sfx in git_branch_sfx:
 
     content = re.sub(
         r'(#define ZBX_MYSQL_MAX_VERSION_STR\s+)"[^"]+"',
-        rf'\g<1>"{new_db_max_version_str}"',
+        rf'\g<1>"{new_db_max_version_str2}"',
         content
     )
 
