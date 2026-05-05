@@ -10,6 +10,9 @@ set original_dir=%cd%
 
 cd "%WIN_AGENT2_TEMP_DIR%\zabbix*\build\mingw"
 
+:: added for go 1.25 compatibility
+set GOEXPERIMENT=nodwarf5
+
 :: mingw32-make clean
 
 :: Legacy with PCRE 1 and OPENSSL
