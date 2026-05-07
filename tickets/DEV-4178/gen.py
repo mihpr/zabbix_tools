@@ -2,6 +2,9 @@ import shutil
 import os
 
 # Copy Zabbix agent 2 binary to the dir with this Python file before use and set all the config variables below.
+# Run this Python script to generate start.bat file.
+# Run the start.bat file.
+# Stop the agents with stop.bat or stop_force.bat if needed.
 
 ########## config variables ##########
 
