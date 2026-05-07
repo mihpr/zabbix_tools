@@ -16,7 +16,7 @@ server='192.168.56.201'
 server_active=server
 
 # number of agents to start
-num_agents=3
+num_agents=15
 # start interval in seconds between agents
 start_interval=1
 
@@ -35,12 +35,12 @@ def create_agent_config(config_path, n, listen_port):
 
 ########## script starts from here ##########
 
-shutil.rmtree(config_dir, ignore_errors=True)
-os.makedirs(config_dir)
-shutil.rmtree(log_dir, ignore_errors=True)
-os.makedirs(log_dir)
-
 with open('start.bat', 'w') as start_script:
+    start_script.write(f'rmdir /s /q {config_dir}\n')
+    start_script.write(f'rmdir /s /q {log_dir}\n')
+    start_script.write(f'mkdir {config_dir}\n')
+    start_script.write(f'mkdir {log_dir}\n\n')
+
     for n in range(num_agents):
         # txt1 = "My name is {fname}, I'm {age}".format(fname = "John", age = 36)
         config_path = os.path.join(config_dir, f'zabbix_agent2_{n:03d}.win.conf')
