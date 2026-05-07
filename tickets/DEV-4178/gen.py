@@ -16,9 +16,11 @@ server='192.168.56.201'
 server_active=server
 
 # number of agents to start
-num_agents=15
+num_agents=30
 # start interval in seconds between agents
 start_interval=1
+# sleep before start
+start_sleep=5
 
 ########## functions ##########
 
@@ -41,6 +43,9 @@ os.makedirs(config_dir)
 with open('start.bat', 'w') as start_script:
     start_script.write(f'rmdir /s /q {log_dir}\n')
     start_script.write(f'mkdir {log_dir}\n\n')
+
+    start_script.write(f'echo Sleeping before start {start_sleep} seconds\n')
+    start_script.write(f'timeout /t {start_sleep} /nobreak >nul\n\n')
 
     for n in range(num_agents):
         # txt1 = "My name is {fname}, I'm {age}".format(fname = "John", age = 36)
