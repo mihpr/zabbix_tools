@@ -10,8 +10,8 @@ set original_dir=%cd%
 
 cd "%WIN_AGENT2_TEMP_DIR%\zabbix*\build\mingw"
 
-:: added for go 1.25 compatibility
-set GOEXPERIMENT=nodwarf5
+:: added for go 1.25 compatibility (however, this should be set in Zabbix repository where applicable)
+:: set GOEXPERIMENT=nodwarf5
 
 :: mingw32-make clean
 
