@@ -21,13 +21,13 @@ git_branch_sfx = (
     ("master",      "7.5")
 )
 
-jira    = "ZBXNEXT-10618"
-db_type = DB_TYPE_TIMESCALE
+jira    = "ZBXNEXT-10592"
+db_type = DB_TYPE_MYSQL
 author  = "mprihodko"
 
 if db_type == DB_TYPE_MYSQL:
     new_db_max_version_str_in_commit_msg = "9.7"
-    new_db_max_version_str_in_h_file     = "9.7.x"
+    new_db_max_version_str_in_h_file     = "9.07.x" # this is different for different versions, be careful
     new_db_max_version_int  = "90799"
 elif db_type == DB_TYPE_TIMESCALE:
     new_db_max_version_str_in_commit_msg = "2.27"
