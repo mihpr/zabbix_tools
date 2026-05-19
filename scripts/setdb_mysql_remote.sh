@@ -13,10 +13,10 @@ DB_ADMIN_PASSWORD="password"
 DB_USER="zabbix"
 DB_PASSWORD="password"
 
-CREATE_USER=false
+CREATE_USER=true
 DROP_DB=true
 CREATE_SERVER=true
-CREATE_PROXY=true
+CREATE_PROXY=false
 
 if [ "$ZABBIX_5" = false ]; then
     charset="utf8mb4"
@@ -30,7 +30,7 @@ fi
 # create user
 if [ "${CREATE_USER}" = true ]; then
     echo "[owl] create user..."
-    sudo mysql -h ${DB_HOST} -u${DB_ADMIN} -p${DB_ADMIN_PASSWORD} --execute="CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+    sudo mysql -h ${DB_HOST} -u${DB_ADMIN} -p${DB_ADMIN_PASSWORD} --execute="CREATE USER IF NOT EXISTS'${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
     sudo mysql -h ${DB_HOST} -u${DB_ADMIN} -p${DB_ADMIN_PASSWORD} --execute="GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'%' WITH GRANT OPTION;"
 fi
 
