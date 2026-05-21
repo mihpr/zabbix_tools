@@ -21,9 +21,10 @@
 STARTED_AT=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # ---=== [Settings] ===---
-BRANCH_DEV="feature/ZBX-25672-7.0"
+BRANCH_DEV="feature/ZBXNEXT-10611-7.0"
 BRANCH_RELEASE="release/7.0"
-LOG_DIR="${HOME}/scripts/iwyu_log/${STARTED_AT}/"
+# BRANCH_RELEASE="master"
+LOG_DIR="${HOME}/iwyu_log/${STARTED_AT}/"
 LOG_PREFIX="IWUY_WRAPPER"
 
 
