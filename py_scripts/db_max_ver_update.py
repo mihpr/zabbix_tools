@@ -8,8 +8,9 @@ import sys
 # ~/git/zabbix$ python3 ~/git/zabbix_tools/py_scripts/db_max_ver_update.py
 
 ### constants
-DB_TYPE_MYSQL = "MySQL"
+DB_TYPE_MYSQL     = "MySQL"
 DB_TYPE_TIMESCALE = "TimescaleDB"
+DB_TYPE_MARIADB   = "MariaDB"
 
 ### settings
 
@@ -21,18 +22,23 @@ git_branch_sfx = (
     ("master",      "7.5")
 )
 
-jira    = "ZBXNEXT-10592"
-db_type = DB_TYPE_MYSQL
+jira    = "ZBXNEXT-10478"
+db_type = DB_TYPE_MARIADB
 author  = "mprihodko"
 
+# New values to set
 if db_type == DB_TYPE_MYSQL:
     new_db_max_version_str_in_commit_msg = "9.7"
     new_db_max_version_str_in_h_file     = "9.07.x" # this is different for different versions, be careful
-    new_db_max_version_int  = "90799"
+    new_db_max_version_int_in_h_file     = "90799"
 elif db_type == DB_TYPE_TIMESCALE:
     new_db_max_version_str_in_commit_msg = "2.27"
     new_db_max_version_str_in_h_file     = new_db_max_version_str_in_commit_msg
-    new_db_max_version_int  = "22799"
+    new_db_max_version_int_in_h_file     = "22799"
+elif db_type == DB_TYPE_MARIADB:
+    new_db_max_version_str_in_commit_msg = "12.3"
+    new_db_max_version_str_in_h_file     = "12.03.xx"
+    new_db_max_version_int_in_h_file     = "120399"
 else:
     print(f"Error: unsupported db_type '{db_type}'")
     sys.exit(1)
@@ -44,6 +50,8 @@ def commit_msg_build():
         components = 'A......PS.'
     elif db_type == DB_TYPE_TIMESCALE:
         components = 'A.......S.'
+    elif db_type == DB_TYPE_MARIADB:
+        components = 'A......PS.'
 
     return "{} [{}] updated maximum supported {} version to {}".format(components, jira, db_type, new_db_max_version_str_in_commit_msg)
 
@@ -98,11 +106,14 @@ def version_replace():
         content = f.read()
 
     if db_type == DB_TYPE_MYSQL:
-        content = replace_define_int(content, 'ZBX_MYSQL_MAX_VERSION', new_db_max_version_int)
+        content = replace_define_int(content, 'ZBX_MYSQL_MAX_VERSION', new_db_max_version_int_in_h_file)
         content = replace_define_str(content, 'ZBX_MYSQL_MAX_VERSION_STR', new_db_max_version_str_in_h_file)
     elif db_type == DB_TYPE_TIMESCALE:
-        content = replace_define_int(content, 'ZBX_TIMESCALE_MAX_VERSION', new_db_max_version_int)
+        content = replace_define_int(content, 'ZBX_TIMESCALE_MAX_VERSION', new_db_max_version_int_in_h_file)
         content = replace_define_str(content, 'ZBX_TIMESCALE_MAX_VERSION_STR', new_db_max_version_str_in_h_file)
+    elif db_type == DB_TYPE_MARIADB:
+        content = replace_define_int(content, 'ZBX_MARIADB_MAX_VERSION', new_db_max_version_int_in_h_file)
+        content = replace_define_str(content, 'ZBX_MARIADB_MAX_VERSION_STR', new_db_max_version_str_in_h_file)
 
     with open(file_path, "w") as f:
         f.write(content)
