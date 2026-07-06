@@ -22,8 +22,8 @@ git_branch_sfx = (
     ("master",      "7.5")
 )
 
-jira    = "ZBXNEXT-10478"
-db_type = DB_TYPE_MARIADB
+jira    = "ZBXNEXT-10669"
+db_type = DB_TYPE_TIMESCALE
 author  = "mprihodko"
 
 # New values to set
@@ -32,9 +32,9 @@ if db_type == DB_TYPE_MYSQL:
     new_db_max_version_str_in_h_file     = "9.07.x" # this is different for different versions, be careful
     new_db_max_version_int_in_h_file     = "90799"
 elif db_type == DB_TYPE_TIMESCALE:
-    new_db_max_version_str_in_commit_msg = "2.27"
+    new_db_max_version_str_in_commit_msg = "2.28"
     new_db_max_version_str_in_h_file     = new_db_max_version_str_in_commit_msg
-    new_db_max_version_int_in_h_file     = "22799"
+    new_db_max_version_int_in_h_file     = "22899"
 elif db_type == DB_TYPE_MARIADB:
     new_db_max_version_str_in_commit_msg = "12.3"
     new_db_max_version_str_in_h_file     = "12.03.xx"
@@ -128,10 +128,9 @@ os.system("git fetch")
 os.system("git status")
 
 for rel_branch, feat_sfx in git_branch_sfx:
-    feat_branch = "feature/{}-{}".format(jira, feat_sfx)
-
     os.system("git checkout {}".format(rel_branch))
     os.system("git pull")
+    feat_branch = "feature/{}-{}".format(jira, feat_sfx)
     os.system("git checkout -b {}".format(feat_branch))
 
     commit_msg = commit_msg_build()
