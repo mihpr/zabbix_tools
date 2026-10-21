@@ -13,8 +13,8 @@ DB_TYPE_TIMESCALE = "TimescaleDB"
 DB_TYPE_MARIADB   = "MariaDB"
 
 ### settings
-jira    = "ZBXNEXT-10786" # <-- check this!
-db_type = DB_TYPE_TIMESCALE # <-- check this!
+jira    = "ZBXNEXT-10796" # <-- check this!
+db_type = DB_TYPE_MARIADB # <-- check this!
 author  = "mprihodko"
 
 # New values to set
@@ -38,10 +38,12 @@ elif db_type == DB_TYPE_TIMESCALE:
         ("master",      "7.5", "2.30", "2.30.x", "23099"), # <-- check this!
     )
 elif db_type == DB_TYPE_MARIADB:
-    pass # TODO: add new implementation
-    # new_db_max_version_str_in_commit_msg = "12.3"
-    # new_db_max_version_str_in_h_file     = "12.03.xx"
-    # new_db_max_version_int_in_h_file     = "120399"
+    versions = (
+        ("release/6.0", "6.0", "13.0", "13.00.xx", "130099"), # <-- check this!
+        ("release/7.0", "7.0", "13.0", "13.00.xx", "130099"), # <-- check this!
+        ("release/7.4", "7.4", "13.0", "13.00.xx", "130099"), # <-- check this!
+        ("master",      "7.5", "13.0", "13.0.x",  "130099"), # <-- check this!
+    )
 else:
     print(f"Error: unsupported db_type '{db_type}'")
     sys.exit(1)
