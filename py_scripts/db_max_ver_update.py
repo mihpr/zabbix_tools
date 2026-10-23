@@ -13,8 +13,8 @@ DB_TYPE_TIMESCALE = "TimescaleDB"
 DB_TYPE_MARIADB   = "MariaDB"
 
 ### settings
-jira    = "ZBXNEXT-10796" # <-- check this!
-db_type = DB_TYPE_MARIADB # <-- check this!
+jira    = "ZBXNEXT-10866" # <-- check this!
+db_type = DB_TYPE_TIMESCALE # <-- check this!
 author  = "mprihodko"
 
 # New values to set
@@ -32,10 +32,10 @@ if db_type == DB_TYPE_MYSQL:
     # new_db_max_version_int_in_h_file     = "90799"
 elif db_type == DB_TYPE_TIMESCALE:
     versions = (
-        ("release/6.0", "6.0", "2.30", "2.30",   "23099"), # <-- check this!
-        ("release/7.0", "7.0", "2.30", "2.30",   "23099"), # <-- check this!
-        ("release/7.4", "7.4", "2.30", "2.30",   "23099"), # <-- check this!
-        ("master",      "7.5", "2.30", "2.30.x", "23099"), # <-- check this!
+        ("release/6.0", "6.0", "2.31", "2.31",   "23199"), # <-- check this!
+        ("release/7.0", "7.0", "2.31", "2.31",   "23199"), # <-- check this!
+        ("release/7.4", "7.4", "2.31", "2.31",   "23199"), # <-- check this!
+        ("master",      "7.5", "2.31", "2.31.x", "23199"), # <-- check this!
     )
 elif db_type == DB_TYPE_MARIADB:
     versions = (
