@@ -6,21 +6,24 @@
 # - Navigate to the main repository dir
 # - Checkout and pull the release branch
 # - Run the script like so:
-# worktree_add.sh ZBXNEXT-9397-7.0
+# worktree_add.sh release/7.0 ZBXNEXT-9397-7.0
 
-WORKTREE_DIR=$1
-BRANCH=$2
-
-if [[ -z "$BRANCH" ]]; then
-	BRANCH="feature/${WORKTREE_DIR}"
+if [ $# -ne 2 ]; then
+    echo "Usage: $(basename "$0") <remote branch to start from> <feature branch suffix>"
+    echo "Example: $(basename "$0") release/7.0 ZBXNEXT-9397-7.0"
+    exit 1
 fi
+
+BASE_BRANCH=$1
+TICKET_VERSION=$2
 
 CURRENT_DIR=$(pwd)
 WEBROOT=/var/www/html
 
+git fetch origin
+git worktree add -b feature/${TICKET_VERSION} "${CURRENT_DIR}/../${TICKET_VERSION}" origin/${BASE_BRANCH}
 
-git worktree add -b ${BRANCH} "${CURRENT_DIR}/../${WORKTREE_DIR}"
-git push -u origin ${BRANCH}
+git push -u origin feature/${TICKET_VERSION}
 
-ln -s "${CURRENT_DIR}/../${WORKTREE_DIR}" "${WEBROOT}/${WORKTREE_DIR}"
-ls -l "${WEBROOT}/${WORKTREE_DIR}"
+ln -s "${CURRENT_DIR}/../${TICKET_VERSION}" "${WEBROOT}/${TICKET_VERSION}"
+ls -l "${WEBROOT}/${TICKET_VERSION}"
