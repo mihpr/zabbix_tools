@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# Dumps one PostgreSQL database to ${DUMPS_HOME}/pg_<DB_NAME>.sql
+# Usage: ./pgdump.sh DB_NAME   (e.g. ./backup_db.sh zabbix)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Settings
@@ -11,14 +14,19 @@ DUMPS_HOME="${HOME}/dumps"
 # ----------------------------------------------------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------------------------------------------------
+usage() {
+    echo "Usage: $(basename "$0") DB_NAME" >&2
+    exit 1
+}
+
 backup_db() {
-    local DB_NAME=$1
-    PGPASSWORD=${DB_PASSWORD} pg_dump -h ${DB_HOST} -f "${DUMPS_HOME}/pg_${DB_NAME}.sql" -U${DB_USER} ${DB_NAME}
+    local DB_NAME="$1"
+    PGPASSWORD="${DB_PASSWORD}" pg_dump -h "${DB_HOST}" -U "${DB_USER}" -f "${DUMPS_HOME}/pg_${DB_NAME}.sql" "${DB_NAME}"
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Main
 # ----------------------------------------------------------------------------------------------------------------------
+[[ $# -eq 1 ]] || usage
 
-backup_db "exposed"
-backup_db "exposed_proxy"
+backup_db "$1"
