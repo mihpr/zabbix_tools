@@ -8,13 +8,14 @@ import sys
 # ~/git/zabbix$ python3 ~/git/zabbix_tools/py_scripts/db_max_ver_update.py
 
 ### constants
-DB_TYPE_MYSQL     = "MySQL"
-DB_TYPE_TIMESCALE = "TimescaleDB"
-DB_TYPE_MARIADB   = "MariaDB"
+DB_TYPE_MYSQL        = "MySQL"
+DB_TYPE_TIMESCALE    = "TimescaleDB"
+DB_TYPE_MARIADB      = "MariaDB"
+DB_TYPE_POSTGRESQL   = "PostgreSQL"
 
 ### settings
-jira    = "ZBXNEXT-10905" # <-- check this!
-db_type = DB_TYPE_TIMESCALE # <-- check this!
+jira    = "ZBXNEXT-10665" # <-- check this!
+db_type = DB_TYPE_POSTGRESQL # <-- check this!
 author  = "mprihodko"
 
 # New values to set
@@ -39,11 +40,20 @@ elif db_type == DB_TYPE_TIMESCALE:
         ("master",      "8.1", "2.32", "2.32.x", "23299"), # <-- check this!
     )
 elif db_type == DB_TYPE_MARIADB:
+    # TODO: add new branches
     versions = (
         ("release/6.0", "6.0", "13.0", "13.00.xx", "130099"), # <-- check this!
         ("release/7.0", "7.0", "13.0", "13.00.xx", "130099"), # <-- check this!
         ("release/7.4", "7.4", "13.0", "13.00.xx", "130099"), # <-- check this!
         ("master",      "7.5", "13.0", "13.0.x",  "130099"), # <-- check this!
+    )
+elif db_type == DB_TYPE_POSTGRESQL:
+    versions = (
+        ("release/6.0", "6.0", "19", "19.x", "199999"), # <-- check this!
+        ("release/7.0", "7.0", "19", "19.x", "199999"), # <-- check this!
+        ("release/7.4", "7.4", "19", "19.x", "199999"), # <-- check this!
+        ("release/8.0", "8.0", "19", "19.x", "199999"), # <-- check this!
+        ("master",      "8.1", "19", "19.x", "199999"), # <-- check this!
     )
 else:
     print(f"Error: unsupported db_type '{db_type}'")
@@ -51,13 +61,21 @@ else:
 
 ### functions
 
-def commit_msg_build(new_ver):
+def components_get():
     if db_type == DB_TYPE_MYSQL:
         components = 'A......PS.'
     elif db_type == DB_TYPE_TIMESCALE:
         components = 'A.......S.'
     elif db_type == DB_TYPE_MARIADB:
         components = 'A......PS.'
+    elif db_type == DB_TYPE_POSTGRESQL:
+        components = 'A......PS.'
+    else:
+        raise ValueError(f"Error: unsupported db_type '{db_type}'")
+    return components
+
+def commit_msg_build(new_ver):
+    components = components_get()
 
     return "{} [{}] updated maximum supported {} version to {}".format(components, jira, db_type, new_ver)
 
@@ -90,10 +108,7 @@ def replace_define_str(content: str, define: str, new_value: str) -> str:
     )
 
 def changelog_create(commit_msg):
-    if db_type == DB_TYPE_MYSQL:
-        components = 'A......PS.'
-    elif db_type == DB_TYPE_TIMESCALE:
-        components = 'A.......S.'
+    components = components_get()
 
     file_path = "ChangeLog.d/feature/{}".format(jira)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
@@ -117,10 +132,14 @@ def version_replace(max_ver_str, max_ver_int):
     elif db_type == DB_TYPE_TIMESCALE:
         content = replace_define_str(content, 'ZBX_TIMESCALE_MAX_VERSION_STR', max_ver_str)
         content = replace_define_int(content, 'ZBX_TIMESCALE_MAX_VERSION', max_ver_int)
-
     elif db_type == DB_TYPE_MARIADB:
         content = replace_define_str(content, 'ZBX_MARIADB_MAX_VERSION_STR', max_ver_str)
         content = replace_define_int(content, 'ZBX_MARIADB_MAX_VERSION', max_ver_int)
+    elif db_type == DB_TYPE_POSTGRESQL:
+        content = replace_define_str(content, 'ZBX_POSTGRESQL_MAX_VERSION_STR', max_ver_str)
+        content = replace_define_int(content, 'ZBX_POSTGRESQL_MAX_VERSION', max_ver_int)
+    else:
+        raise ValueError(f"Error: unsupported db_type '{db_type}'")
 
     with open(file_path, "w") as f:
         f.write(content)
